@@ -58,14 +58,30 @@
                 </li>
                 <li class="mt-3 flex items-center pl-8 lg:mt-0">
                   <div class="flex">
-                    <span class="mr-2 text-sm text-slate-500">light</span>
+                    <span class="mr-2 text-sm text-slate-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"
+                        />
+                      </svg>
+                    </span>
                     <input type="checkbox" class="hidden" id="dark-toggle" />
                     <label for="dark-toggle">
                       <div class="flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-500 p-1">
                         <div class="toggle-circle h-4 w-4 rounded-full bg-white transition duration-300 ease-in-out"></div>
                       </div>
                     </label>
-                    <span class="ml-2 text-sm text-slate-500">dark</span>
+                    <span class="ml-2 text-sm text-slate-500">
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-6 w-6">
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z"
+                        />
+                      </svg>
+                    </span>
                   </div>
                 </li>
               </ul>
@@ -393,25 +409,28 @@
           </div>
         </div>
 
-        <form>
+        <form name="hardika-contact-form">
           <div class="w-full lg:mx-auto lg:w-2/3" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
             <div class="mb-8 w-full px-4">
               <label for="name" class="text-base font-bold text-primary">Name</label>
-              <input type="text" id="name" class="w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+              <input type="text" id="name" class="w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" name="nama" />
             </div>
             <div class="mb-8 w-full px-4">
-              <label for="email" class="text-base font-bold text-primary">Email</label>
-              <input type="email" id="email" class="w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" />
+              <label for="email" class="text-base font-bold text-primary" data-original="Email">Email</label>
+              <input type="email" id="email" class="w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" name="email" />
             </div>
             <div class="mb-8 w-full px-4">
               <label for="message" class="text-base font-bold text-primary">Message</label>
-              <textarea type="text" id="name" class="h-32 w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"></textarea>
+              <textarea type="text" id="name" class="h-32 w-full rounded-md bg-slate-200 p-3 text-dark focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary" name="pesan"></textarea>
             </div>
             <div class="w-full px-4">
-              <button class="w-full rounded-full bg-primary py-3 px-8 text-base font-semibold text-white transition duration-500 hover:opacity-80 hover:shadow-lg">Submit</button>
+              <button type="submit" class="w-full rounded-full bg-primary py-3 px-8 text-base font-semibold text-white transition duration-500 hover:opacity-80 hover:shadow-lg">Submit</button>
             </div>
           </div>
         </form>
+        <!-- alert -->
+        <div id="message-sent" class="my-alert mt-4 hidden text-center text-green-500">Your message has been sent! thank you.</div>
+        <!-- alert -->
       </div>
     </section>
     <!-- contact end -->
@@ -573,5 +592,28 @@
       });
     </script>
     <script src="dist/js/script.js"></script>
+
+    <script>
+      const scriptURL = "https://script.google.com/macros/s/AKfycbwwLbEczob5XPkMKVFOV4vNgRCB8ul9oXlyGeaL-CmaISqIthQqzVL2XVil6jZqvwqQ/exec";
+      const form = document.forms["hardika-contact-form"];
+      const myAlert = document.querySelector(".my-alert");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        fetch(scriptURL, { method: "POST", body: new FormData(form) })
+          .then((response) => {
+            // tampilkan alert
+            myAlert.classList.toggle("hidden");
+            // reset form
+            form.reset();
+            // hilangkan alert
+            setTimeout(function () {
+              document.getElementById("message-sent").classList.add("hidden");
+            }, 10000);
+            console.log("Success!", response);
+          })
+          .catch((error) => console.error("Error!", error.message));
+      });
+    </script>
   </body>
 </html>
