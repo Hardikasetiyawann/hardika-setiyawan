@@ -976,8 +976,8 @@ video {
   padding-right: 1.5rem;
 }
 
-.pl-8 {
-  padding-left: 2rem;
+.pl-6 {
+  padding-left: 1.5rem;
 }
 
 .pt-36 {
@@ -1002,6 +1002,14 @@ video {
 
 .pt-10 {
   padding-top: 2.5rem;
+}
+
+.pl-5 {
+  padding-left: 1.25rem;
+}
+
+.pl-8 {
+  padding-left: 2rem;
 }
 
 .text-center {
